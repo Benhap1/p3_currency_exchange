@@ -1,11 +1,10 @@
 package ru.skillbox.currency.exchange.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Setter
 @Getter
@@ -30,5 +29,8 @@ public class Currency {
 
     @Column(name = "iso_num_code")
     private Long isoNumCode;
+
+    @Column(name = "iso_char_code")
+    private String isoCharCode;
 
 }
