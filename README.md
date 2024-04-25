@@ -1,6 +1,15 @@
 # Сервис Обмен валюты
 Приложение для практического кейса "Обмен Валюты" обучающей платформы [Skillbox](https://skillbox.ru)
 
+### Изменения в коде
+http://localhost:8080/api/currency/all - в ответе возвращаются все хранящиеся в базе данных валюты и их стоимость. 
+1. Добавлен файл миграции add_iso_char_code_to_currency.xml для поля буквенного кода валюты
+2. Добавлен файл миграции remove_inserted_currency_rows.xml, удаляющий старые записи, так как
+   метод класса CurrencyParserService парсит XML-файл целиком.
+3. В классе CurrencyParserService создан метод init(), который сразу подгружает данные банка в базу,
+   а parseAndSaveCurrencyData() сработает по условию через 1 час.
+4. Созданы маппинг-классы Valute, ValCurs.
+
 ## Используемые технологии
 
 - Spring Boot 2.7
@@ -68,3 +77,4 @@ curl --request GET \
 curl --request GET \
 --url http://localhost:8080/api/currency/convert?value=100&numCode=840
 ```
+

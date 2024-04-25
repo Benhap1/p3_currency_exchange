@@ -10,9 +10,9 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5433/postgres
     username: postgres
-    password: postgres
+    password: root
   jpa:
     properties:
       hibernate:
@@ -21,3 +21,5 @@ spring:
         hbm2ddl:
           auto: none
 
+currency:
+  url: "https://www.cbr-xml-daily.ru/daily_utf8.xml"

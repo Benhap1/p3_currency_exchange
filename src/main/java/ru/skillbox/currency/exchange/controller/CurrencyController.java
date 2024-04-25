@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import ru.skillbox.currency.exchange.dto.CurrencyDto;
 import ru.skillbox.currency.exchange.service.CurrencyService;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/currency")
@@ -26,4 +31,27 @@ public class CurrencyController {
     ResponseEntity<CurrencyDto> create(@RequestBody CurrencyDto dto) {
         return ResponseEntity.ok(service.create(dto));
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<Map<String, List<Map<String, Object>>>> getAllCurrencies() {
+        // Получаем список всех валют с помощью сервиса
+        List<CurrencyDto> currencies = service.getAllCurrencies();
+
+        // Преобразуем список валют в необходимый формат
+        List<Map<String, Object>> formattedCurrencies = currencies.stream()
+                .map(currency -> {
+                    // Создаем отображение для каждой валюты, содержащее только поля "name" и "value"
+                    Map<String, Object> formattedCurrency = new HashMap<>();
+                    formattedCurrency.put("name", currency.getName());
+                    formattedCurrency.put("value", currency.getValue());
+                    return formattedCurrency;
+                })
+                .collect(Collectors.toList());
+
+        Map<String, List<Map<String, Object>>> response = new HashMap<>();
+        response.put("currencies", formattedCurrencies);
+
+        return ResponseEntity.ok(response);
+    }
+
 }
